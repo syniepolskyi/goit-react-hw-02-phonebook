@@ -3,7 +3,7 @@ import { Container } from './App.styled';
 import { ContactForm } from '../ContactForm';
 import { ContactList } from '../ContactList';
 import { Filter } from '../Filter';
-import toast, { Toaster } from 'react-hot-toast';
+//import toast, { Toaster } from 'react-hot-toast';
 
 export class App extends React.Component {
   state = {
@@ -77,7 +77,7 @@ export class App extends React.Component {
   render() {
     return (
       <Container>
-        <Toaster position="top-right" />
+        {/*<Toaster position="top-right" />*/}
         <h1>Phonebook</h1>
         <ContactForm
           name={this.state.name}
