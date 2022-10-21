@@ -31,7 +31,7 @@ export class App extends React.Component {
     );
     if (found >= 0) {
       this.toastAlert(`${name} already exists`);
-      return;
+      return false;
     }
     this.setState({
       contacts: [
@@ -43,6 +43,7 @@ export class App extends React.Component {
         },
       ],
     });
+    return true;
   };
 
   handleDelete = evt => {

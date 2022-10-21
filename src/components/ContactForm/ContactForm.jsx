@@ -10,11 +10,10 @@ import {
 } from '../App/App.styled';
 
 export class ContactForm extends React.Component {
-  
   state = {
     name: '',
-    number: ''
-  }
+    number: '',
+  };
 
   handleChange = evt => {
     this.setState({
@@ -25,19 +24,19 @@ export class ContactForm extends React.Component {
   handleFormSubmit = evt => {
     evt.preventDefault();
     const { addContact } = this.props;
-    addContact(this.state);
-    this.setState({
-      name: '',
-      number: ''
-    });
-    evt.target.reset();
-  }
+    if (addContact(this.state)) {
+      this.setState({
+        name: '',
+        number: '',
+      });
+      evt.target.reset();
+    }
+  };
 
   inputNameId = crypto.randomUUID();
   inputNumberId = crypto.randomUUID();
 
   render() {
-    
     const { name, number } = this.state;
 
     return (
