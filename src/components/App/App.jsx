@@ -14,8 +14,6 @@ export class App extends React.Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
   emptyMsg = 'Contact list is empty';
@@ -27,13 +25,12 @@ export class App extends React.Component {
     });
   };
 
-  handleSubmit = evt => {
-    evt.preventDefault();
+  addContact = ({name, number}) => {
     const found = this.state.contacts.findIndex(
-      el => el.name.trim().toUpperCase() === this.state.name.toUpperCase()
+      el => el.name.trim().toUpperCase() === name.trim().toUpperCase()
     );
     if (found >= 0) {
-      this.toastAlert(`${this.state.name} already exists`);
+      this.toastAlert(`${name} already exists`);
       return;
     }
     this.setState({
@@ -41,14 +38,11 @@ export class App extends React.Component {
         ...this.state.contacts,
         {
           id: crypto.randomUUID(),
-          name: this.state.name.trim(),
-          number: this.state.number.trim(),
+          name: name.trim(),
+          number: number.trim(),
         },
       ],
-      name: '',
-      number: '',
     });
-    evt.target.reset();
   };
 
   handleDelete = evt => {
@@ -82,8 +76,7 @@ export class App extends React.Component {
         <ContactForm
           name={this.state.name}
           number={this.state.number}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
+          addContact={this.addContact}
         />
 
         <h2>Contacts</h2>

@@ -10,14 +10,38 @@ import {
 } from '../App/App.styled';
 
 export class ContactForm extends React.Component {
+  
+  state = {
+    name: '',
+    number: ''
+  }
+
+  handleChange = evt => {
+    this.setState({
+      [evt.target.name]: evt.target.value,
+    });
+  };
+
+  handleFormSubmit = evt => {
+    evt.preventDefault();
+    const { addContact } = this.props;
+    addContact(this.state);
+    this.setState({
+      name: '',
+      number: ''
+    });
+    evt.target.reset();
+  }
+
   inputNameId = crypto.randomUUID();
   inputNumberId = crypto.randomUUID();
 
   render() {
-    const { name, number, handleChange, handleSubmit } = this.props;
+    
+    const { name, number } = this.state;
 
     return (
-      <ContactFormStyled onSubmit={handleSubmit} autoComplete="off">
+      <ContactFormStyled onSubmit={this.handleFormSubmit} autoComplete="off">
         <InputGroup>
           <Input
             type="text"
@@ -26,7 +50,7 @@ export class ContactForm extends React.Component {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             value={name}
-            onChange={handleChange}
+            onChange={this.handleChange}
             required
           />
           <InputLabel htmlFor={this.inputNameId}>Name</InputLabel>
@@ -40,7 +64,7 @@ export class ContactForm extends React.Component {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             value={number}
-            onChange={handleChange}
+            onChange={this.handleChange}
             required
           />
           <InputLabel htmlFor={this.inputNumberId}>Number</InputLabel>
@@ -55,8 +79,5 @@ export class ContactForm extends React.Component {
 }
 
 ContactForm.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.string,
-  handleChange: PropTypes.func,
-  handleSubmit: PropTypes.func,
+  addContact: PropTypes.func,
 };

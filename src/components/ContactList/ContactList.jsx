@@ -29,4 +29,5 @@ ContactList.propTypes = {
       number: PropTypes.string,
     })
   ),
+  handleDelete: PropTypes.func
 };
